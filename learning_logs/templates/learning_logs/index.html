@@ -2,7 +2,23 @@
     {% extends "learning_logs/base.html" %}
 
     {% block page_header %}
-    <div cla="jambotron">
+
+    <ul>
+    {% if user.is_authenticated %}
+
+     <div class="jambotron">
+        <h1 class="display-3">Ласкаво просимо!</h1>
+
+        <p class="lead">Ви увійшли до вашого журналу спостережень.
+            <br>
+            Дізнались щось нове або хочете переглянути старі дописи? Просимо!
+        </p>
+
+        <a class="btn btn-lg btn-primary" href="{% url 'learning_logs:topics' %}" role="button">Перейти до ваших тем &raquo;</a>
+    </div>
+
+    {% else %}
+        <div class="jambotron">
         <h1 class="display-3">Відстежуйте своє навчання.</h1>
 
         <p class="lead">Зробіть свій власний Журнал Спостережень та зберігайте список тем, які ви вивчаєте.
@@ -10,4 +26,8 @@
 
         <a class="btn btn-lg btn-primary" href="{% url 'users:register' %}" role="button">Зареєструватися &raquo;</a>
     </div>
+    {% endif %}
+
+
+
     {% endblock page_header%}

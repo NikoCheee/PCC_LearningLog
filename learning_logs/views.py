@@ -86,6 +86,7 @@ def edit_entry(request, entry_id):
     """Редагувати існуючий допис"""
     entry = Entry.objects.get(id=entry_id)
     topic = entry.topic
+    name = entry.entry_name
     if topic.owner != request.user:
         raise Http404
 
@@ -99,5 +100,5 @@ def edit_entry(request, entry_id):
             form.save()
             return redirect('learning_logs:topic', topic_id=topic.id)
 
-    context = {'entry': entry, 'topic': topic, 'form': form}
+    context = {'entry': entry, 'topic': topic, 'name': name, 'form': form}
     return render(request, 'learning_logs/edit_entry.html', context)

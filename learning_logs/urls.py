@@ -17,4 +17,8 @@ urlpatterns = [
     path('new_entry/<int:topic_id>/', views.new_entry, name='new_entry'),
     # # Сторінка редагування допису
     path('edit_entry/<int:entry_id>', views.edit_entry, name='edit_entry'),
+    # сторінка із дописами
+    # path('entries/<int:topic_id>', views.edit_entry, name='entries'),
+    # сторінка допису
+    path('entry/<int:entry_id>', views.entry, name='entry'),
 ]

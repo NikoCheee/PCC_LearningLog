@@ -38,6 +38,14 @@ def topic(request, topic_id):
 
 
 @login_required()
+def entry(request, entry_id):
+    """Показати одну тему та все що там введено"""
+    entry = get_object_or_404(Entry, id=entry_id)
+    context = {'topic': topic, 'entry': entry}
+    return render(request, 'learning_logs/entry.html', context)
+
+
+@login_required()
 def new_topic(request):
     """Додати нову тему"""
     if request.method != 'POST':

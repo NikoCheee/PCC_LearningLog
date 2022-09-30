@@ -13,14 +13,16 @@
       {% for entry in entries %}
         <div class="card mb-3">
             <h4 class="card-header">
-                <a href="{% url 'learning_logs:entry' entry.id %}">{{entry.entry_name}},
-                {{ entry.date_added|date:'M d, Y H:i' }}</a>
-
-                <small><a href="{% url 'learning_logs:edit_entry' entry.id %}">Редагувати допис</a></small>
+                <a href="{% url 'learning_logs:entry' entry.id %}">{{entry.entry_name}}</a>
+                <br>
+                <small class="text-muted" >{{ entry.date_added|date:'M d, Y H:i' }}</small>
             </h4>
-<!--            <div class="card-body">-->
-<!--&lt;!&ndash;                {{ entry.text|linebreaks }}&ndash;&gt;-->
-<!--            </div>-->
+            <div class="card-body">
+                {{ entry.text|linebreaks }}
+            </div>
+            <div class="card-footer text-muted">
+                <a href="{% url 'learning_logs:edit_entry' entry.id %}">Редагувати допис</a>
+            </div>
         </div>
       {% empty %}
         <p> Ще немає дописів до цієї теми </p>

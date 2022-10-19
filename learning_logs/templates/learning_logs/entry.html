@@ -13,7 +13,7 @@
                 {{entry.entry_name}}
             </h3>
             <div class="card-body">
-                {{ entry.text|linebreaks }}
+                {{ entry.text|safe }}
             </div>
             <div class="card-footer">
                 <h4> <small><a href="{% url 'learning_logs:edit_entry' entry.id %}">Редагувати допис</a></small></h4>

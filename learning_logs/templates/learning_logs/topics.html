@@ -10,7 +10,7 @@
       {% for topic in topics %}
         <li><h3>
                 {% if topic.text|length > 50 %}
-            <a href="{% url 'learning_logs:topic' topic.id %}"> {{ topic }}</a>
+            <a href="{% url 'learning_logs:topic' topic.id %}"> {{ topic|truncatechars:65 }}</a>
                 {% else %}
             <a href="{% url 'learning_logs:topic' topic.id %}"> {{ topic }}</a>
                 {% endif %}

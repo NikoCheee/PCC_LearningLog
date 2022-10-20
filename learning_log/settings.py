@@ -37,7 +37,7 @@ INSTALLED_APPS = [
 
     # Сторонні застосунки
     'bootstrap4',
-    'tinymce',
+    'ckeditor',
 
     # Уставні застосунки django 
     'django.contrib.admin',

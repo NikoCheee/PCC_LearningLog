@@ -1,12 +1,5 @@
 from django import forms
-# from django.contrib.flatpages.models import FlatPage
-from tinymce.widgets import TinyMCE
 from .models import Topic, Entry
-
-
-class TinyMCEWidget(TinyMCE):
-    def use_required_attribute(self, *args):
-        return False
 
 
 class TopicForm(forms.ModelForm):
@@ -21,4 +14,4 @@ class EntryForm(forms.ModelForm):
         model = Entry
         fields = ['entry_name', 'text']
         labels = {'entry_name': '', 'text': ''}
-        widget = forms.CharField(widget=TinyMCEWidget(attrs={'required': False, 'cols': 30, 'rows': 10}))
+        widgets = {'text': forms.Textarea(attrs={'cols': 80})}

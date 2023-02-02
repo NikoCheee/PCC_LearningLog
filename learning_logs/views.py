@@ -1,7 +1,9 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.core.paginator import Paginator  # відповідає за розбиття на сторінки
+from django.views.generic.edit import DeleteView
+from django.urls import reverse_lazy
 
 from .models import Topic, Entry
 from .forms import TopicForm, EntryForm
@@ -115,3 +117,12 @@ def edit_entry(request, entry_id):
 
     context = {'entry': entry, 'topic': topic, 'name': name, 'form': form}
     return render(request, 'learning_logs/edit_entry.html', context)
+
+
+class EntryDeleteView(DeleteView):
+    model = Entry
+    template_name = 'learning_logs/entry_delete.html'
+
+    def get_success_url(self):
+        topic = self.object.topic
+        return reverse('learning_logs:topic', args=[topic.pk])

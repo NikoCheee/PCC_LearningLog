@@ -10,7 +10,7 @@
         <a href="{% url 'learning_logs:new_entry' topic.id %}">Додати новий допис</a>
     </p>
 
-      {% for entry in entries %}
+      {% for entry in page %}
         <div class="card mb-3">
             <h4 class="card-header">
                 <a href="{% url 'learning_logs:entry' entry.id %}">{{entry.entry_name}}</a>
@@ -22,11 +22,32 @@
             </div>
             <div class="card-footer text-muted">
                 <a href="{% url 'learning_logs:edit_entry' entry.id %}">Редагувати допис</a>
+                <a href="{% url 'learning_logs:entry_delete' entry.id %}" style="float:right">Видалити допис</a>
             </div>
         </div>
       {% empty %}
         <p> Ще немає дописів до цієї теми </p>
       {% endfor %}
 
+{% if page.has_other_pages %}
+<div class="pagination"
+     style="margin: 0 auto; width: 420px; background-color: GhostWhite;">
+    <span class="step-links">
+        {% if page.has_previous %}
+            <a href="?page=1">&laquo; Перша</a>
+            <a href="?page={{ page.previous_page_number }}">Попередня</a>
+        {% endif %}
 
-{% endblock content%}
+        <span class="current">
+            Сторінка {{ page.number }} з {{ page.paginator.num_pages }}.
+        </span>
+
+        {% if page.has_next %}
+            <a href="?page={{ page.next_page_number }}">Наступна</a>
+            <a href="?page={{ page.paginator.num_pages }}">Остання &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+{% endif %}
+
+{% endblock content %}

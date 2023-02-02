@@ -1,0 +1,17 @@
+{% extends "learning_logs/base.html" %}
+{% load bootstrap4 %}
+
+{% block page_header %}
+<h2>Видалення допису</h2>
+{% endblock page_header %}
+
+{% block content %}
+
+    <p>Ви дійсно бажаєте видалити допис {{ entry.entry_name }}?</p>
+
+    <form action="" method='post' class="form">
+      {% csrf_token %}
+      <button name="submit" class="btn btn-danger">Так, видалити</button>
+    </form>
+
+{% endblock content%}

@@ -9,16 +9,16 @@ urlpatterns = [
     path('', views.index, name='index'),
     # Сторінка, що відображає всі теми
     path('topics/', views.topics, name='topics'),
-    # # Сторінка, що присвячена окремій темі
+    # Сторінка, що присвячена окремій темі
     path('topics/<int:topic_id>', views.topic, name='topic'),
-    # # Сторінка для додавання нової теми
+    # Сторінка для додавання нової теми
     path('new_topic/', views.new_topic, name='new_topic'),
-    # # новий допис
+    # новий допис
     path('new_entry/<int:topic_id>/', views.new_entry, name='new_entry'),
-    # # Сторінка редагування допису
+    # Сторінка редагування допису
     path('edit_entry/<int:entry_id>', views.edit_entry, name='edit_entry'),
-    # сторінка із дописами
-    # path('entries/<int:topic_id>', views.edit_entry, name='entries'),
     # сторінка допису
     path('entry/<int:entry_id>', views.entry, name='entry'),
+    # Видалення допису
+    path('entry/<int:pk>/delete', views.EntryDeleteView.as_view(), name='entry_delete'),
 ]

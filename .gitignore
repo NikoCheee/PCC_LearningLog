@@ -1,3 +1,5 @@
 ll_env/
 __pycache__/
 *.sqlite3
+staticfiles/test_script.py
+staticfiles/data-1670873586520.csv

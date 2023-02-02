@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
-
+from django.core.paginator import Paginator  # відповідає за розбиття на сторінки
 
 from .models import Topic, Entry
 from .forms import TopicForm, EntryForm
@@ -33,13 +33,18 @@ def topic(request, topic_id):
     if topic.owner != request.user:
         raise Http404
     entries = topic.entry_set.order_by('-date_added')
-    context = {'topic': topic, 'entries': entries}
+
+    paginator = Paginator(entries, 10)  # показати 10 дописів на сторінці
+    page_number = request.GET.get('page')  # гет реквест щоб отримати номер сторінки
+    page_obj = paginator.get_page(page_number)  # отримати номер сторінки і відобразити її данні для контексту
+
+    context = {'topic': topic, 'entries': entries, 'page': page_obj}
     return render(request, 'learning_logs/topic.html', context)
 
 
 @login_required()
 def entry(request, entry_id):
-    """Показати одну тему та все що там введено"""
+    """Показати один допис"""
     entry = get_object_or_404(Entry, id=entry_id)
     context = {'topic': topic, 'entry': entry}
     return render(request, 'learning_logs/entry.html', context)

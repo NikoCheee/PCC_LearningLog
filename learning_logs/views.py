@@ -10,7 +10,7 @@ from .forms import TopicForm, EntryForm
 
 
 def index(request):
-    """Головна сторінка жжурналу спостережень"""
+    """Головна сторінка журналу спостережень"""
     return render(request, 'learning_logs/index.html')
 
 
@@ -21,7 +21,7 @@ def index(request):
 
 @login_required()
 def topics(request):
-    """Відображає всі теми"""
+    """Показує усі теми"""
     topics = Topic.objects.filter(owner=request.user).order_by('date_added')
     context = {'topics': topics}
     return render(request, 'learning_logs/topics.html', context)

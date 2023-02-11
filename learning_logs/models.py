@@ -20,6 +20,7 @@ class Entry(models.Model):
     text = RichTextField(blank=True, null=True)
     date_added = models.DateTimeField(auto_now_add=True)
     entry_name = models.CharField(max_length=200)
+    tags =
 
     class Meta:
         verbose_name_plural = 'entries'

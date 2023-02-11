@@ -1,11 +1,35 @@
 {% extends "learning_logs/base.html" %}
 
 {% block page_header %}
-<h1>{{ topic|linebreaks }}</h1>
+{% if search %}
+    <h1>Пошук</h1>
+{% else %}
+    <h1>{{ topic|linebreaks }}</h1>
+{% endif %}
 {% endblock page_header %}
 
 {% block content %}
+    {% if search %}
+      {% for entry in page %}
+        <div class="card mb-3">
+            <h4 class="card-header">
+                <a href="{% url 'learning_logs:entry' entry.id %}">{{entry.entry_name}}</a>
+                <br>
+                <small class="text-muted" >{{ entry.date_added|date:'M d, Y H:i' }}</small>
+            </h4>
+            <div class="card-body">
+                {{ entry.text|safe }}
+            </div>
+            <div class="card-footer text-muted">
+                <a href="{% url 'learning_logs:edit_entry' entry.id %}">Редагувати допис</a>
+                <a href="{% url 'learning_logs:entry_delete' entry.id %}" style="float:right">Видалити допис</a>
+            </div>
+        </div>
+      {% empty %}
+        <p> Нема результатів </p>
+      {% endfor %}
 
+    {% else %}
     <p>
         <a href="{% url 'learning_logs:new_entry' topic.id %}">Додати новий допис</a>
     </p>
@@ -28,6 +52,7 @@
       {% empty %}
         <p> Ще немає дописів до цієї теми </p>
       {% endfor %}
+    {% endif %}
 
 {% if page.has_other_pages %}
 <div class="pagination"

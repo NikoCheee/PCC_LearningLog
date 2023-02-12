@@ -17,7 +17,7 @@ def index(request):
     if strval:
         query = Q(entry_name__icontains=strval)  # шукає по заголовку
         query.add(Q(text__icontains=strval), Q.OR)  # шукає по тексту
-        # query.add(Q(tags__name__in=[strval]), Q.OR)
+        query.add(Q(tags__name__in=[strval]), Q.OR)
         entries = Entry.objects.filter(query).select_related().order_by('-date_added').distinct()[:10]
 
         paginator = Paginator(entries, 10)  # показати 10 дописів на сторінці
@@ -105,6 +105,7 @@ def new_entry(request, topic_id):
             new_entry = form.save(commit=False)
             new_entry.topic = topic
             new_entry.save()
+            form.save_m2m()
             return redirect('learning_logs:topic', topic_id=topic_id)
 #
     # Показати порожню або недійсну форму.

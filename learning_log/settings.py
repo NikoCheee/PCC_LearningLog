@@ -134,6 +134,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Мої налаштування
 LOGIN_URL = 'users:login'
+TAGGIT_CASE_INSENSITIVE = True
 
 # Heroku settings
 import django_heroku

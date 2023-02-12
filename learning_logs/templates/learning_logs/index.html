@@ -6,7 +6,8 @@
 <div style="float:right">
     <!-- https://www.w3schools.com/howto/howto_css_search_button.asp -->
     <form>
-        <input type="text" placeholder="Search.." name="search" value="">
+        <input type="text" placeholder="Search.." name="search"
+               {% if search %} value="{{ search }}" {% endif %}>
         <button type="submit"><i class="fa fa-search"></i></button>
         <a href="#"><i class="fa fa-undo"></i></a>
     </form>

@@ -9,6 +9,17 @@
 {% endblock page_header %}
 
 {% block content %}
+
+<div style="float:right">
+    <!-- https://www.w3schools.com/howto/howto_css_search_button.asp -->
+    <form>
+        <input type="text" placeholder="Search.." name="search"
+               {% if search %} value="{{ search }}" {% endif %}>
+        <button type="submit"><i class="fa fa-search"></i></button>
+        <a href="#"><i class="fa fa-undo"></i></a>
+    </form>
+</div>
+
     {% if search %}
       {% for entry in page %}
         <div class="card mb-3">
@@ -21,6 +32,9 @@
                 {{ entry.text|safe }}
             </div>
             <div class="card-footer text-muted">
+                                {% for tag in entry.tags.all %}
+                {{ tag }}
+                {% endfor %}
                 <a href="{% url 'learning_logs:edit_entry' entry.id %}">Редагувати допис</a>
                 <a href="{% url 'learning_logs:entry_delete' entry.id %}" style="float:right">Видалити допис</a>
             </div>
@@ -45,6 +59,9 @@
                 {{ entry.text|safe }}
             </div>
             <div class="card-footer text-muted">
+                {% for tag in entry.tags.all %}
+                {{ tag }}
+                {% endfor %}
                 <a href="{% url 'learning_logs:edit_entry' entry.id %}">Редагувати допис</a>
                 <a href="{% url 'learning_logs:entry_delete' entry.id %}" style="float:right">Видалити допис</a>
             </div>

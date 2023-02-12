@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from ckeditor.fields import RichTextField
+from taggit.managers import TaggableManager
 
 
 class Topic(models.Model):
@@ -20,7 +21,9 @@ class Entry(models.Model):
     text = RichTextField(blank=True, null=True)
     date_added = models.DateTimeField(auto_now_add=True)
     entry_name = models.CharField(max_length=200)
-    tags =
+
+    # https://django-taggit.readthedocs.io/en/latest/api.html#TaggableManager
+    tags = TaggableManager(blank=True)
 
     class Meta:
         verbose_name_plural = 'entries'

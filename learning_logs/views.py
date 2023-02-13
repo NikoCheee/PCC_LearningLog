@@ -18,14 +18,14 @@ def index(request):
         query = Q(entry_name__icontains=strval)  # шукає по заголовку
         query.add(Q(text__icontains=strval), Q.OR)  # шукає по тексту
         query.add(Q(tags__name__in=[strval]), Q.OR)
-        entries = Entry.objects.filter(query).select_related().order_by('-date_added').distinct()[:10]
+        entries = Entry.objects.filter(query).select_related().order_by('-date_added').distinct()
 
         paginator = Paginator(entries, 10)  # показати 10 дописів на сторінці
         page_number = request.GET.get('page')  # гет реквест щоб отримати номер сторінки
         page_obj = paginator.get_page(page_number)  # отримати номер сторінки і відобразити її данні для контексту
 
         context = {'entries': entries, 'page': page_obj, 'search': strval}
-        return render(request, 'learning_logs/topic.html', context)
+        return render(request, 'learning_logs/search.html', context)
 
     return render(request, 'learning_logs/index.html')
 
@@ -72,7 +72,7 @@ def entry(request, entry_id):
 def new_topic(request):
     """Додати нову тему"""
     if request.method != 'POST':
-        # Жодних даних не відправлено; стоврити порожню форму
+        # Жодних даних не відправлено; створити порожню форму
         form = TopicForm()
     else:
         # відправлений пост; обробити дані

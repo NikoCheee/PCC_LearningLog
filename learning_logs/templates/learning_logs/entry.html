@@ -16,10 +16,11 @@
                 {{ entry.text|safe }}
             </div>
             <div class="card-footer">
-                                {% for tag in entry.tags.all %}
-                {{ tag }}
+                {% for tag in entry.tags.all %}
+                    <a href="{% url 'learning_logs:index' %}?search={{ tag }}">{{ tag }}</a>
                 {% endfor %}
-                <h4> <small><a href="{% url 'learning_logs:edit_entry' entry.id %}">Редагувати допис</a></small></h4>
+                <small><a href="{% url 'learning_logs:edit_entry' entry.id %}">Редагувати допис</a></small>
+                <small><a href="{% url 'learning_logs:entry_delete' entry.id %}" style="float:right">Видалити допис</a></small>
             </div>
         </div>
 

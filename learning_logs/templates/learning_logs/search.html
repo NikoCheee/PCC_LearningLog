@@ -1,0 +1,65 @@
+{% extends "learning_logs/base.html" %}
+
+{% block page_header %}
+    <h1>Пошук за запитом {{ search }}</h1>
+{% endblock page_header %}
+
+{% block content %}
+
+<div style="float:right">
+    <!-- https://www.w3schools.com/howto/howto_css_search_button.asp -->
+    <form>
+        <input type="text" placeholder="Search.." name="search"
+               {% if search %} value="{{ search }}" {% endif %}>
+        <button type="submit"><i class="fa fa-search"></i></button>
+        <a href="#"><i class="fa fa-undo"></i></a>
+    </form>
+</div>
+
+    {% if search %}
+      {% for entry in page %}
+        <div class="card mb-3">
+            <h4 class="card-header">
+                <a href="{% url 'learning_logs:entry' entry.id %}">{{entry.entry_name}}</a>
+                <br>
+                <small class="text-muted" >{{ entry.date_added|date:'M d, Y H:i' }}</small>
+            </h4>
+            <div class="card-body">
+                {{ entry.text|safe }}
+            </div>
+            <div class="card-footer text-muted">
+                <!-- https://stackoverflow.com/questions/25345392/how-to-add-url-parameters-to-django-template-url-tag -->
+                {% for tag in entry.tags.all %}
+                    <a href="{% url 'learning_logs:index' %}?search={{ tag }}">{{ tag }}</a>
+                {% endfor %}
+                <a href="{% url 'learning_logs:edit_entry' entry.id %}">Редагувати допис</a>
+                <a href="{% url 'learning_logs:entry_delete' entry.id %}" style="float:right">Видалити допис</a>
+            </div>
+        </div>
+      {% empty %}
+        <p><h2>Нема результатів</h2></p>
+      {% endfor %}
+    {% endif %}
+
+{% if page.has_other_pages %}
+<div class="pagination"
+     style="margin: 0 auto; width: 430px; background-color: GhostWhite;">
+    <span class="step-links">
+        {% if page.has_previous %}
+            <a href="?page=1">&laquo; Перша</a>
+            <a href="?page={{ page.previous_page_number }}">Попередня</a>
+        {% endif %}
+
+        <span class="current">
+            Сторінка {{ page.number }} з {{ page.paginator.num_pages }}.
+        </span>
+
+        {% if page.has_next %}
+            <a href="?page={{ page.next_page_number }}">Наступна</a>
+            <a href="?page={{ page.paginator.num_pages }}">Остання &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+{% endif %}
+
+{% endblock content %}
